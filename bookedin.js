@@ -1,5 +1,6 @@
 const express = require('express');
 var handlebars = require('express-handlebars').create();
+const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
@@ -10,6 +11,7 @@ const port = 3000
 
 app.engine('handlebars', handlebars.engine); //registering handlebars with express
 app.set('view engine', 'handlebars'); 
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
