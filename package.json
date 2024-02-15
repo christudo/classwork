@@ -6,5 +6,12 @@
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2"
+  },
+  "scripts": {
+    "start": "node ./bookedin.js",
+    "dev": "nodemon ./bookedin.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
