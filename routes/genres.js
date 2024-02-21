@@ -40,6 +40,6 @@ router.get('/show/:id', async (req, res, next) => {
     templateVars.genre = Genere.get(templateVars.genre.genreId);
   }
   res.render('genres/show', templateVars);
-})
+});
 
 module.exports = router;

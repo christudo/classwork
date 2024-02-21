@@ -4,6 +4,11 @@
         <p>Genre {{genre.id}} - {{genre.name}}</p>
     {{/if}}
 
+    <!-- Display the associated genre -->
+    {{#if book.genreId}}
+        <p>Genre: {{book.genreName}}</p>
+    {{/if}}
+
     {{#if book}}
         <p>Originally published in {{book.publishingYear}}
     {{/if}}
