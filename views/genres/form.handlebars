@@ -13,13 +13,13 @@
     
   <div>
   <label for="genreId" >Genre</label>
-  <select name="genreID" id="genreId" required>
-    <option disabled selected value>-- select Genre --</option>
-      {{#each genres}}
-        <option value="{{this.id}}" {{#if (eq genreId this.id)}}selected{{/if}}>
-            {{this.name}}
+  <select name="genreId" id="genreId" required>
+    <option disabled selected value>-- Select Genre --</option>
+    {{#each genres}}
+        <option value="{{this.id}}">
+        {{this.name}}
         </option>
-      {{/each}}
+    {{/each}}
     </select>
   </div>
 

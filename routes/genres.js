@@ -10,7 +10,12 @@ router.get('/', function(req, res, next) {
 });
 
   router.get('/form', async (req, res, next) => {
-    res.render('genres/form', { title: 'BookedIn || Books', books: Book.all });
+    const genresList = Genre.all
+    res.render('genres/form', {
+        title: 'BookedIn || Books', 
+        books: Book.all, 
+        genres: genresList
+    });
   });
 
 router.post('/upsert', async (req, res, next) => {
