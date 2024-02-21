@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
 const booksRouter = require('./routes/books');
+const genresRouter = require('./routes/genres');
 
 const app = express()
 const port = 3000
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
 app.use('/books', booksRouter);
+app.use('/genres', genresRouter)
 
 // custom 404 page
 app.use((req, res) => {
