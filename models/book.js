@@ -1,8 +1,9 @@
 const books = [
+    {title: "Leviathan Wakes", publishingYear: 2011, authorIds: ["0","1"]},
     {title: "bookone", publishingYear: 2021},
     {title: "booktwo", publishingYear: 2022},
     {title: "bookthree", publishingYear: 2023},
-]
+  ]
 
   exports.add = (book) => {
     books.push(book);
@@ -17,10 +18,14 @@ const books = [
   }  
   
   exports.upsert = (book) => {
+    if (book.authorIds && ! Array.isArray(book.authorIds)) {
+      book.authorIds = [book.authorIds];
+    }
     if (book.id) {
       exports.update(book);
     } else {
       exports.add(book);
     }
   }
+  
   exports.all = books

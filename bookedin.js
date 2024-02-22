@@ -1,10 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const { credentials } = require('./config');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session')
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
 const booksRouter = require('./routes/books');
 const genresRouter = require('./routes/genres');
+const usersRouter = require('./routes/users');
+
 
 const app = express()
 const port = 3000
@@ -31,11 +36,34 @@ var handlebars = require('express-handlebars').create({
 app.engine('handlebars', handlebars.engine); //registering handlebars with express
 app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser(credentials.cookieSecret));
 
+app.use(expressSession({
+    secret: credentials.cookieSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+  }));  
+// session configuration
+//make it possible to use flash messages, and pass them to the view
+app.use((req, res, next) => {
+    res.locals.flash = req.session.flash
+    delete req.session.flash
+    next()
+  })
+// session configuration
+//make the current user available in views
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.currentUser
+  next()
+})
+
+  
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
 app.use('/books', booksRouter);
-app.use('/genres', genresRouter)
+app.use('/genres', genresRouter);
+app.use('/users', usersRouter);
 
 // custom 404 page
 app.use((req, res) => {
