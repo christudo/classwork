@@ -3,6 +3,14 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/register', async (req, res, next) => {
+  if (req.session.currentUser) {
+    req.session.flash = {
+      type: 'info',
+      intro: 'Error!',
+      message: 'You are already logged in',
+    };
+    return res.redirect(303, '/')
+  }
   res.render('users/register', { title: 'BookedIn || Registration' });
 });
 
@@ -17,7 +25,9 @@ router.post('/register', async (req, res, next) => {
           intro: 'Error!',
           message: `A user with this email already exists`}
       });
-    } else {
+    }
+
+    else {
       User.add(req.body);
       req.session.flash = {
         type: 'info',
@@ -27,8 +37,6 @@ router.post('/register', async (req, res, next) => {
       res.redirect(303, '/');
     }
   });
-  
-
 router.post('/logout', async (req, res, next) => {
     delete req.session.currentUser
     req.session.flash = {
@@ -53,7 +61,9 @@ router.get('/login', async (req, res, next) => {
         message: 'You are now logged in',
       };
       res.redirect(303, '/');
-    } else {
+    } 
+    
+    else {
       res.render('users/login', {
         title: 'BookedIn || Login',
         flash: {
@@ -61,7 +71,27 @@ router.get('/login', async (req, res, next) => {
           intro: 'Error!',
           message: `Wrong email and password combination or the user could not be found`}
       });
+
     }
+    function IsLoggedIn(req, res) {
+      if (req.session.currentUser) {
+        req.session.flash = {
+          type: 'info',
+          intro: 'Error!',
+          message: 'You are already logged in',
+        };
+        res.redirect(303, '/');
+        return true;
+      }
+      return false;
+    }
+
+    router.get('/register', async (req, res, next) => {
+      if (IsLoggedIn(req, res)) {
+        return
+      }
+      res.render('users/register', { title: 'BookedIn || Registration' });
+    });    
   });
 
 module.exports = router;

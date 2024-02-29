@@ -1,5 +1,7 @@
 <form action="/genres/upsert" role="form" method="post">
 {{#if genre}}
+<input type="hidden" name="_csrf" value="{{_csrfToken}}">
+
     <div>
       <h2>{{genre.id}} {{genre.name}}</h2>
       <input type="hidden" name="id" value="{{genreIndex}}">

@@ -3,6 +3,7 @@ const { credentials } = require('./config');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session')
+const csrf = require('csurf')
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
@@ -58,12 +59,19 @@ app.use((req, res, next) => {
   next()
 })
 
-  
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
 app.use('/books', booksRouter);
 app.use('/genres', genresRouter);
 app.use('/users', usersRouter);
+
+// this must come after we link in body-parser,
+// cookie-parser, and express-session
+app.use(csrf({ cookie: true }))
+app.use((req, res, next) => {
+  res.locals._csrfToken = req.csrfToken()
+  next()
+})
 
 // custom 404 page
 app.use((req, res) => {
@@ -78,6 +86,8 @@ app.use((err, req, res, next) => {
     res.status(500)
     res.send('500 - Server Error')
 })
+
+
 app.listen(port, () => console.log(
     `Express started on http://localhost:${port}; ` +
     `press Ctrl-C to terminate.`))

@@ -10,11 +10,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/form', async (req, res, next) => {
-  const authorsList = Authors.all;
+
   res.render('authors/form', {
       title: 'BookedIn || Authors', 
-      books: Booked.all,
-      authors: authorsList
   });
 });
 
