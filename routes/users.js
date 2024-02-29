@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const Book = require('../models/book');
+const BookUser = require('../models/book_user');
+const helpers = require('./helpers');
 
 router.get('/register', async (req, res, next) => {
   if (req.session.currentUser) {
@@ -12,6 +15,20 @@ router.get('/register', async (req, res, next) => {
     return res.redirect(303, '/')
   }
   res.render('users/register', { title: 'BookedIn || Registration' });
+});
+
+router.get('/profile', async (req, res, next) => {
+  if (helpers.isNotLoggedIn(req, res)) {
+    return
+  }
+  const booksUser = BookUser.AllForUser(req.session.currentUser.email);
+  booksUser.forEach((bookUser) => {
+    bookUser.book = Book.get(bookUser.bookId)
+  })
+  res.render('users/profile',
+    { title: 'BookedIn || Profile',
+      user: req.session.currentUser,
+      booksUser: booksUser });
 });
 
 router.post('/register', async (req, res, next) => {
@@ -72,18 +89,6 @@ router.get('/login', async (req, res, next) => {
           message: `Wrong email and password combination or the user could not be found`}
       });
 
-    }
-    function IsLoggedIn(req, res) {
-      if (req.session.currentUser) {
-        req.session.flash = {
-          type: 'info',
-          intro: 'Error!',
-          message: 'You are already logged in',
-        };
-        res.redirect(303, '/');
-        return true;
-      }
-      return false;
     }
 
     router.get('/register', async (req, res, next) => {

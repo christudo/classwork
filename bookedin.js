@@ -2,8 +2,8 @@ const express = require('express');
 const { credentials } = require('./config');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const expressSession = require('express-session')
-const csrf = require('csurf')
+const expressSession = require('express-session');
+const csrf = require('csurf');
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
@@ -51,13 +51,13 @@ app.use((req, res, next) => {
     res.locals.flash = req.session.flash
     delete req.session.flash
     next()
-  })
+  });
 // session configuration
 //make the current user available in views
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.currentUser
   next()
-})
+});
 
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
@@ -72,7 +72,7 @@ app.use(csrf({ cookie: true }))
 app.use((req, res, next) => {
   res.locals._csrfToken = req.csrfToken()
   next()
-})
+});
 
 // custom 404 page
 app.use((req, res) => {
@@ -87,7 +87,6 @@ app.use((err, req, res, next) => {
     res.status(500)
     res.send('500 - Server Error')
 })
-
 
 app.listen(port, () => console.log(
     `Express started on http://localhost:${port}; ` +
