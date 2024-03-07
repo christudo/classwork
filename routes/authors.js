@@ -4,10 +4,15 @@ const router = express.Router();
 const Author = require('../models/author');
 const Book = require('../models/book');
 
-router.get('/', function(req, res, next) {
+/*router.get('/', function(req, res, next) {
   const authors = Author.all;
   res.render('authors/index', { title: 'BookedIn || Authors', authors: authors });
-});
+});*/
+
+router.get('/', async (req, res, next) => {
+  let authors = await Author.all();
+  res.render('authors/index', { title: 'BookedIn || Authors', authors: authors });
+ }); 
 
 router.get('/form', async (req, res, next) => {
 
