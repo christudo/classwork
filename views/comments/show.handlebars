@@ -1,0 +1,8 @@
+{{#if comment}}
+    <p>User: {{comment.userEmail}}</p>
+    <p>Book: {{lookupBookTitle comment.bookId}}</p>
+    <p>Comment: {{comment.text}}</p>
+    <a href="/comments/edit?id={{comment.id}}">Edit</a>
+{{else}}
+    <p>Comment not found.</p>
+{{/if}}

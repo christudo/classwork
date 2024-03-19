@@ -1,15 +1,15 @@
-<h1>{{genre.id}}</h1>
+<h1>{{genre.name}}</h1>
 
-    {{#if genre}}
-        <p>Genre {{genre.id}} - {{genre.name}}</p>
-    {{/if}}
+{{#if genre}}
+  <p>Genre: {{genre.name}}</p>
+{{/if}}
 
-    <!-- Display the associated genre -->
-    {{#if book.genreId}}
-        <p>Genre: {{book.genreName}}</p>
-    {{/if}}
+<!-- Display the associated genre -->
+{{#if book.genreId}}
+  <p>Genre: {{book.genreName}}</p>
+{{/if}}
 
-    {{#if book}}
-        <p>Originally published in {{book.publishingYear}}
-    {{/if}}
+{{#if book}}
+  <p>Originally published in {{book.publishingYear}}</p>
+{{/if}}
 </p>

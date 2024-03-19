@@ -1,0 +1,14 @@
+{{#if comments.length}}
+    <ul>
+        {{#each comments}}
+            <li>
+                <p>User: {{this.userEmail}}</p>
+                <p>Book: {{lookupBookTitle this.bookId}}</p>
+                <p>Comment: {{this.text}}</p>
+                <a href="/comments/show/{{this.id}}">View</a>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No comments found.</p>
+{{/if}}

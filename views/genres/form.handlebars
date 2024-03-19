@@ -1,46 +1,16 @@
 <form action="/genres/upsert" role="form" method="post">
 {{#if genre}}
-<input type="hidden" name="_csrf" value="{{_csrfToken}}">
+  <input type="hidden" name="_csrf" value="{{_csrfToken}}">
 
-    <div>
-      <h2>{{genre.id}} {{genre.name}}</h2>
-      <input type="hidden" name="id" value="{{genreIndex}}">
-    </div>
+  <div>
+    <h2>{{genre.id}} {{genre.name}}</h2>
+    <input type="hidden" name="id" value="{{genreIndex}}">
+  </div>
   {{/if}}
 
   <div>
-    <label for="title">book title</label>
-    <input type="text" id="title" name="title" {{#if book}}value="{{book.title}}"{{/if}} required>
-  </div>
-    
-  <div>
-  <label for="genreId" >Genre</label>
-  <select name="genreId" id="genreId" required>
-    <option disabled selected value>-- Select Genre --</option>
-    {{#each genres}}
-        <option value="{{this.id}}">
-        {{this.name}}
-        </option>
-    {{/each}}
-    </select>
-  </div>
-
-  <div>
-    <label for="publishingYear">publishing year</label>
-    <input type="number" id="publishingYear" name="publishingYear" {{#if book}}value="{{book.publishingYear}}"{{/if}} required>
-  </div>
-
-   <div class="mb-3">
-    <label for="authorId">Author</label>
-    <select name="authorId" id="authorId">
-      <option disabled selected value>-- select Author --</option>
-      {{#each authors}}
-            <option value="{{this.id}}" 
-            {{#if (and @root.author (eq @root.authorId this.id))}}selected{{/if}}>
-          {{this.firstName}} {{this.lastName}}
-        </option>
-      {{/each}}
-    </select>
+    <label for="name">Genre Name</label>
+    <input type="text" id="name" name="name" required>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>

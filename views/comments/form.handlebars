@@ -1,0 +1,31 @@
+
+<form action="/comments/upsert" method="post">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    {{#if comment}}
+        <input type="hidden" name="id" value="{{comment.id}}">
+    {{/if}}
+    
+    <div>
+        <label for="bookId">Book:</label>
+        <select name="bookId" id="bookId">
+            <option disabled selected value>-- Select a Book --</option>
+            {{#each books}}
+                <option value="{{this.id}}" {{#if (eq this.id comment.bookId)}}selected{{/if}}>
+                    {{this.title}}
+                </option>
+            {{/each}}
+        </select>
+    </div>
+
+    <div>
+        <label for="userEmail">User Email:</label>
+        <input type="text" id="userEmail" name="userEmail" required {{#if comment}}value="{{comment.userEmail}}"{{/if}}>
+    </div>
+
+    <div>
+        <label for="text">Comment:</label>
+        <textarea id="text" name="text" rows="4" required>{{#if comment}}{{comment.text}}{{/if}}</textarea>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>

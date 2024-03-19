@@ -44,7 +44,8 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
-  }));  
+  }));
+
 // session configuration
 //make it possible to use flash messages, and pass them to the view
 app.use((req, res, next) => {
@@ -52,6 +53,7 @@ app.use((req, res, next) => {
     delete req.session.flash
     next()
   });
+  
 // session configuration
 //make the current user available in views
 app.use((req, res, next) => {
