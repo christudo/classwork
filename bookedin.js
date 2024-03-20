@@ -11,6 +11,7 @@ const booksRouter = require('./routes/books');
 const genresRouter = require('./routes/genres');
 const usersRouter = require('./routes/users');
 const booksUsersRouter = require('./routes/books_users');
+const commentsRouter = require('./routes/comments');
 
 const app = express()
 const port = 3000
@@ -67,6 +68,7 @@ app.use('/books', booksRouter);
 app.use('/genres', genresRouter);
 app.use('/users', usersRouter);
 app.use('/books_users', booksUsersRouter);
+app.use('/comments', commentsRouter);
 
 // this must come after we link in body-parser,
 // cookie-parser, and express-session

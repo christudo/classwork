@@ -7,7 +7,7 @@ const BookUser = require('../models/book_user');
 const Genre = require('../models/genre'); // Add the Genre model
 
 router.get('/', function(req, res, next) {
-  const books = Book.all
+  const books = Book.all;
   res.render('books/index', { title: 'BookedIn || Books', books: books });
 });
 
@@ -17,15 +17,10 @@ router.get('/form', async (req, res, next) => {
   res.render('books/form', { title: 'BookedIn || Books', authors: authors, genres: genres });
 });
 
-router.get('/form', async (req, res, next) => {
-  const genres = Genre.all(); // Fetch all genres
-  res.render('books/form', { title: 'BookedIn || Books', genres: genres });
-});  
-
 router.get('/edit/:id', async (req, res, next) => {
   const bookId = req.params.id;
   const book = Book.get(bookId);
-  const genres = Genre.all(); // Fetch all genres
+  const genres = Genre.all; // Fetch all genres
   res.render('books/form', { title: 'BookedIn || Books', book: book, genres: genres });
 });
 
@@ -36,7 +31,7 @@ router.post('/upsert', async (req, res, next) => {
   req.session.flash = {
     type: 'info',
     intro: 'Success!',
-    message: `the book has been ${createdOrupdated}!`,
+    message: `The book has been ${createdOrupdated}!`,
   };
   res.redirect(303, '/books')
 });

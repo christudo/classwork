@@ -4,12 +4,14 @@
   <p>Genre: {{genre.name}}</p>
 {{/if}}
 
-<!-- Display the associated genre -->
-{{#if book.genreId}}
-  <p>Genre: {{book.genreName}}</p>
+<!-- Display the associated books -->
+{{#if books.length}}
+  <h2>Books in {{genre.name}}</h2>
+  <ul>
+    {{#each books}}
+      <li>{{this.title}} (Published in {{this.publishingYear}})</li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No books found for this genre.</p>
 {{/if}}
-
-{{#if book}}
-  <p>Originally published in {{book.publishingYear}}</p>
-{{/if}}
-</p>

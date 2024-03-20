@@ -4,9 +4,7 @@
 <ul>
     {{#each genres}}
     <li>
-        <a href="/genres/show/{{this.id}}">{{this.id}} - {{this.name}}</a>
-            {{this.id}} - {{this.name}}
-        <a href="/genres/edit?id={{this.id}}">edit</a>
+        <a href="/genres/show/{{this.genreId}}">{{this.genreId}} - {{this.name}}</a>
     </li>
     {{/each}}
 </ul>

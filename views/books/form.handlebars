@@ -26,19 +26,6 @@
           {{this.firstName}} {{this.lastName}}
         </option>
       {{/each}}
-    </select>
-  
-  <div>
-    <label for="genreId">Genre</label>
-    <select name="genreId" id="genreId">
-      <option disabled selected value>-- Select Genre --</option>
-      {{#each genres}}
-      <option value="{{this.genreId}}" {{#if (eq this.genreId ../book.genreId)}}selected{{/if}}>
-        {{this.name}}
-      </option>
-      {{/each}}
-    </select>
-  </div>
-
+    </select> 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

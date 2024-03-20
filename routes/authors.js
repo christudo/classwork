@@ -5,14 +5,8 @@ const Author = require('../models/author');
 const Book = require('../models/book');
 
 router.get('/', function(req, res, next) {
-  
-  const authors = [
-    {firstName: "James", lastName: "S. A. Corey"},
-    {firstName: "Craig", lastName: "Alanson"},
-    {firstName: "Cixin", lastName: "Liu"},
-  ]
-
-  res.render('authors/form', { title: 'BookedIn || Authors' });
+  const authors = Author.all
+  res.render('authors/index', { title: 'BookedIn || Authors', authors: authors });
 });
 
 router.get('/', async (req, res, next) => {

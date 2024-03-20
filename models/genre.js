@@ -13,8 +13,11 @@ exports.add = (genre) => {
   }  
 
   exports.update = (genre) => {
-    genres[genre.genreId] = genre;
-  }  
+    const index = genres.findIndex(g => g.genreId === genre.genreId);
+    if (index !== -1) {
+        genres[index] = genre;
+    }
+}
 
   exports.upsert = (genre) => {
     if (genre.genreId) {
@@ -24,6 +27,4 @@ exports.add = (genre) => {
     }
   }
 
- exports.all = () => {
-    return genres;
- }
+ exports.all = genres;

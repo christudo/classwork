@@ -10,15 +10,8 @@
     {"id": 1, "name": "Fiction"},
     {"id": 2, "name": "Science Fiction"},
     {"id": 3, "name": "Documentary"},-->
-
 {{#if genre}}
-<p>Genre: {{genre.Fiction}}</p>
-{{/if}}
-{{#if genre}}
-<p>Genre: {{genre.ScienceFiction}}</p>
-{{/if}}
-{{#if genre}}
-<p>Genre: {{genre.Documentary}}</p>
+  <p>Genre: {{genre.name}}</p>
 {{/if}}
 
 {{#if currentUser}}
@@ -28,7 +21,9 @@
     <input type="hidden" name="bookId" value="{{bookId}}">
     <input type="hidden" name="userEmail" value="{{currentUser.email}}">
     
-      <select name="authorIds" multiple id="authorIds">
+<!-- Author Selection -->
+    <label for="authorIds">Authors</label>
+    <select name="authorIds" multiple id="authorIds">
       <option disabled value>-- select Author --</option>
       {{#each authors}}
         <option value="{{@index}}"
@@ -38,6 +33,7 @@
       {{/each}}
     </select>
     
+  <!-- Status Selection -->  
     <label for="status">Status</label>
     <select name="status" id="status">
       {{#unless (and bookUser bookUser.status)}}
