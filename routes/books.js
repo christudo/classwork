@@ -5,6 +5,7 @@ const Book = require('../models/book');
 const Author = require('../models/author');
 const BookUser = require('../models/book_user');
 const Genre = require('../models/genre'); // Add the Genre model
+const Comment = require('../models/comment'); // Add the Comment model
 
 router.get('/', function(req, res, next) {
   const books = Book.all;
@@ -14,14 +15,16 @@ router.get('/', function(req, res, next) {
 router.get('/form', async (req, res, next) => {
   const authors = Author.all;
   const genres = Genre.all; // Fetch all genres
-  res.render('books/form', { title: 'BookedIn || Books', authors: authors, genres: genres });
+  const comments = Comment.all; // Fetch all comments
+  res.render('books/form', { title: 'BookedIn || Books', authors: authors, genres: genres, comments: comments });
 });
 
 router.get('/edit/:id', async (req, res, next) => {
   const bookId = req.params.id;
   const book = Book.get(bookId);
   const genres = Genre.all; // Fetch all genres
-  res.render('books/form', { title: 'BookedIn || Books', book: book, genres: genres });
+  const comments = Comment.all; // Fetch all comments
+  res.render('books/form', { title: 'BookedIn || Books', book: book, comments: comments });
 });
 
 router.post('/upsert', async (req, res, next) => {
@@ -39,7 +42,8 @@ router.post('/upsert', async (req, res, next) => {
   router.get('/show/:id', async (req, res, next) => {
     const bookId = req.params.id;
     const book = Book.get(bookId); // { title, genreId: 2 } as Book
-    const genre = Genre.get(book.genreId); // Fetch the genre based on genreId
+    const genre = Genre.get(book.genreId);
+    const comment = Comment.get(book.commentId); // Fetch the comment based on commentId
     const templateVars = {
       title: 'BookedIn || Books',
       book: book,
@@ -56,7 +60,10 @@ router.post('/upsert', async (req, res, next) => {
     if (req.session.currentUser) {
     templateVars['bookUser'] = BookUser.get(bookId, req.session.currentUser.email);
     }
-    res.render('books/show', { title: 'BookedIn || Books', book: book, genre: genre });
+    if (templateVars.book.commentId) {
+      templateVars['comment'] = Comment.get(templateVars.book.commentId);
+       }
+    res.render('books/show', { title: 'BookedIn || Books', book: book, genre: genre, comment: comment });
 });
 
 module.exports = router;

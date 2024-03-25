@@ -1,13 +1,12 @@
 <h1>Comments</h1>
 {{#if comments}}
-    <ul>
-        {{#each comments}}
-            <li>
-                <p>User: {{this.userEmail}}</p>
-                <p>{{this.text}}</p>
-            </li>
-        {{/each}}
-    </ul>
+  <ul>
+    {{#each comments}}
+    <li>
+        <a href="/comments/show/{{this.commentId}}">{{this.commentId}} - {{this.name}}</a>
+    </li>
+    {{/each}}
+</ul>
 {{else}}
     <p>No comments available.</p>
 {{/if}}
