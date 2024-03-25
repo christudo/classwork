@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const csrf = require('csurf');
+const path = require('path');
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
@@ -12,7 +13,6 @@ const genresRouter = require('./routes/genres');
 const usersRouter = require('./routes/users');
 const booksUsersRouter = require('./routes/books_users');
 const commentsRouter = require('./routes/comments');
-const path = require('path');
 
 const app = express()
 const port = 3000
@@ -41,6 +41,9 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser(credentials.cookieSecret));
 
+// adding routes for bootstrap
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
+
 app.use(expressSession({
     secret: credentials.cookieSecret,
     resave: false,
@@ -62,9 +65,6 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.session.currentUser
   next()
 });
-
-// adding routes for bootstrap
-app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
 
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
