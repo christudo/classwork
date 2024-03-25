@@ -44,7 +44,7 @@ router.post('/upsert', async (req, res, next) => {
     const book = Book.get(bookId); // { title, genreId: 2 } as Book
     const genre = Genre.get(book.genreId);
     const comment = Comment.get(book.commentId); // Fetch the comment based on commentId
-    const templateVars = {
+    let templateVars = {
       title: 'BookedIn || Books',
       book: book,
       bookId: bookId,

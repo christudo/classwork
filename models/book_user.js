@@ -1,8 +1,8 @@
 const books_users = [
-    {bookId: "0", userEmail: "rvanmech@pratt.edu", status: "finished"},
-    {bookId: "1", userEmail: "rvanmech@pratt.edu", status: "reading"},
-    {bookId: "2", userEmail: "rvanmech@pratt.edu", status: "todo"},
-    {bookId: "3", userEmail: "rvanmech@pratt.edu", status: "todo"}
+    {bookId: "0", userEmail: "cdacruz@pratt.edu", status: "finished"},
+    {bookId: "1", userEmail: "cdacruz@pratt.edu", status: "reading"},
+    {bookId: "2", userEmail: "cdacruz@pratt.edu", status: "todo"},
+    {bookId: "3", userEmail: "cdacruz@pratt.edu", status: "todo"}
   ];
   
   exports.statuses = [
@@ -12,6 +12,7 @@ const books_users = [
   exports.add = (book_user) => {
     books_users.push(book_user);
   }
+
   exports.get = (bookId, userEmail) => {
     return books_users.find((book_user) => {
       return book_user.bookId == bookId && book_user.userEmail == userEmail;

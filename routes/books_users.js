@@ -17,7 +17,7 @@ router.post('/upsert', async (req, res, next) => {
   res.redirect(303, redirect)
 });
 
-router.post('/upsert', async (req, res, next) => {
+/*router.post('/upsert', async (req, res, next) => {
   console.log('body: ' + JSON.stringify(req.body))
   let commentId = req.body.commentId;
   let redirect = `/comments/show/${commentId}`;
@@ -25,9 +25,9 @@ router.post('/upsert', async (req, res, next) => {
   req.session.flash = {
     type: 'info',
     intro: 'Success!',
-    message: 'Your status has been stored',
+    message: 'Your comment has been stored',
   };
   res.redirect(303, redirect)
 });
-
+*/
 module.exports = router;

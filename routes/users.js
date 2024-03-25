@@ -5,6 +5,21 @@ const Book = require('../models/book');
 const BookUser = require('../models/book_user');
 const helpers = require('./helpers');
 
+router.get('/profile', async (req, res, next) => {
+  if (helpers.isNotLoggedIn(req, res)) {
+    return
+  }
+
+  const booksUser = BookUser.AllForUser(req.session.currentUser.email);
+    booksUser.forEach((bookUser) => {
+      bookUser.book = Book.get(bookUser.bookId)
+    })
+    res.render('users/profile',
+      { title: 'BookedIn || Profile',
+        user: req.session.currentUser,
+        booksUser: booksUser });
+  });
+
 router.get('/register', async (req, res, next) => {
   if (req.session.currentUser) {
     req.session.flash = {
@@ -15,20 +30,6 @@ router.get('/register', async (req, res, next) => {
     return res.redirect(303, '/')
   }
   res.render('users/register', { title: 'BookedIn || Registration' });
-});
-
-router.get('/profile', async (req, res, next) => {
-  if (helpers.isNotLoggedIn(req, res)) {
-    return
-  }
-  const booksUser = BookUser.AllForUser(req.session.currentUser.email);
-  booksUser.forEach((bookUser) => {
-    bookUser.book = Book.get(bookUser.bookId)
-  })
-  res.render('users/profile',
-    { title: 'BookedIn || Profile',
-      user: req.session.currentUser,
-      booksUser: booksUser });
 });
 
 router.post('/register', async (req, res, next) => {

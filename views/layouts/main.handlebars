@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
+    <link rel='stylesheet' href='/bootstrap/css/bootstrap.css' />
   </head>
+
   <body>
+
      {{#if flash}}
       <div>
         <strong>{{flash.intro}}</strong> {{{flash.message}}}
@@ -39,6 +43,9 @@
       {{/if}}
       </ul>
     </nav>
-    {{{body}}}
+    <div class="container">
+      {{{body}}}
+    </div>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
