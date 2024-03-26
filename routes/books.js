@@ -24,7 +24,8 @@ router.get('/edit/:id', async (req, res, next) => {
   const book = Book.get(bookId);
   const genres = Genre.all; // Fetch all genres
   const comments = Comment.all; // Fetch all comments
-  res.render('books/form', { title: 'BookedIn || Books', book: book, comments: comments });
+  const filteredComments = comments.filter((comment) => comment.bookId === bookId);
+  res.render('books/form', { title: 'BookedIn || Books', book: book, comments: filteredComments });
 });
 
 router.post('/upsert', async (req, res, next) => {
@@ -64,23 +65,6 @@ router.post('/upsert', async (req, res, next) => {
       templateVars['comment'] = Comment.get(templateVars.book.commentId);
        }
     res.render('books/show', { title: 'BookedIn || Books', book: book, genre: genre, comment: comment });
-});
-
-router.post('/:id/comments', (req, res) => {
-  const bookId = req.params.id;
-  const { text, user } = req.body;
-  const comment = { id: generateUniqueId(), bookId, text, user };
-  
-  Comment.addComment(comment);
-  Book.addCommentToBook(bookId, comment.id);
-  res.status(201).json({ message: 'Comment added successfully', comment });
-});
-
-router.get('/:id/comments', (req, res) => {
-  const bookId = req.params.id;
-  const bookComments = Book.getBookComments(bookId);
-
-  res.json({ comments: bookComments });
 });
 
 module.exports = router;

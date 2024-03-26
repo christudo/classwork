@@ -1,8 +1,8 @@
 const books_users = [
-    {bookId: "0", userEmail: "cdacruz@pratt.edu", status: "finished"},
-    {bookId: "1", userEmail: "cdacruz@pratt.edu", status: "reading"},
-    {bookId: "2", userEmail: "cdacruz@pratt.edu", status: "todo"},
-    {bookId: "3", userEmail: "cdacruz@pratt.edu", status: "todo"}
+    {bookId: "0", userEmail: "cdacruz@pratt.edu", status: "finished", },
+    {bookId: "1", userEmail: "cdacruz@pratt.edu", status: "reading", },
+    {bookId: "2", userEmail: "cdacruz@pratt.edu", status: "todo", },
+    {bookId: "3", userEmail: "cdacruz@pratt.edu", status: "todo", }
   ];
   
   exports.statuses = [
@@ -38,6 +38,42 @@ const books_users = [
       exports.add(book_user);
     } else {
       exports.update(idx,book_user);
+    }
+
+    exports.statuses = [
+      "comment"
+    ]
+    
+    exports.add = (comment) => {
+      comments.push(comment);
+    }
+  
+    exports.get = (bookId, userEmail) => {
+      return comments.find((comment) => {
+        return comment.bookId == bookId && comment.userEmail == userEmail;
+      });
+    }
+    
+    exports.AllForUser = (userEmail) => {
+      return comment.filter((comment) => {
+        return comment.userEmail == userEmail;
+      });
+    }
+  
+    exports.update = (idx, book_user) => {
+      books_users[idx] = book_user;
+    }
+    
+    exports.upsert = (book_user) => {
+      let idx = books_users.findIndex((bu) => {
+        return bu.bookId == book_user.bookId &&
+               bu.userEmail == book_user.userEmail;
+      });
+      if (idx == -1) {
+        exports.add(book_user);
+      } else {
+        exports.update(idx,book_user);
+      }
     }
   }
   

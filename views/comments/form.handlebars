@@ -13,5 +13,32 @@
     <input type="text" id="name" name="name" required>
   </div>
 
+  <div>
+    <label for="bookId">Select Book</label>
+    <select id="bookId" name="bookId">
+      <option value="">-- Select a Book --</option>
+      {{#each books}}
+        <option value="{{this.id}}">{{this.title}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+<ul>
+  {{#each books}}
+    <li>
+      <h2>{{this.title}}</h2>
+      <p>Published in {{this.publishingYear}}</p>
+      <p>Authors:
+        {{#each this.authorIds}}
+          {{#if @index}}, {{/if}}
+          {{lookup ../authors this.firstName}} {{lookup ../authors this.lastName}}
+        {{/each}}
+      </p>
+      <p>Genre: {{lookup ../genres this.genreId}}</p>
+      <a href="/books/edit/{{@index}}">Edit</a>
+    </li>
+  {{/each}}
+</ul>
+
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/book');
-const BookUser = require('../models/book_user');
 const Comment = require('../models/comment');
+
 
 router.get('/', function(req, res, next) {
  const comments = Comment.all;
@@ -23,6 +23,26 @@ router.get('/form', async (req, res, next) => {
   res.render('comments/form');
 });
 
+router.post('/:id/comments', (req, res) => {
+  const bookId = req.params.id;
+  const { text, user } = req.body;
+  const comment = { id: generateUniqueId(), bookId, text, user };
+  
+  Comment.addComment(comment);
+  Book.addCommentToBook(bookId, comment.id);
+  res.status(201).json({ message: 'Comment added successfully', comment });
+});
+
+router.get('/:id/comments', (req, res) => {
+  const bookId = req.params.id;
+  const bookComments = Book.getBookComments(bookId);
+
+  res.json({ comments: bookComments });
+});
+
+module.exports = router;
+
+/*
 router.post('/upsert', async (req, res, next) => {
   console.log('body: ' + JSON.stringify(req.body));
   Comment.upsert(req.body);
@@ -38,9 +58,10 @@ router.post('/upsert', async (req, res, next) => {
 router.get('/show/:commentId', function(req, res, next) {
   const commentId = req.params.commentId;
   const books = Book.all.filter(book => book.commentId === commentId);
-  const comment = Comment.get(commentId); // Fetch genre details if needed
+  const comment = Comment.get(commentId);
   res.render('comments/show', { title: 'Comment Books', commentId: commentId, books: books });
 });
 
 
 module.exports = router;
+*/
