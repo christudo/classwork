@@ -1,8 +1,8 @@
 const books = [
-  { id: 1, title: "Leviathan Wakes", publishingYear: 2011, authorIds: ["0", "1"], genreId: "1", comments: [] },
-  { id: 2, title: "bookone", publishingYear: 2021, authorIds: ["0", "1"], genreId: "1", comments: [] },
-  { id: 3, title: "booktwo", publishingYear: 2022, authorIds: ["0", "2"], genreId: "2", comments: [] },
-  { id: 4, title: "bookthree", publishingYear: 2023, authorId: "3", genreId: "3", comments: [] }
+  { id: 0, title: "Leviathan Wakes", publishingYear: 2011, authorIds: ["0", "1"], genreId: "1", comments: [] },
+  { id: 1, title: "bookone", publishingYear: 2021, authorIds: ["0", "1"], genreId: "1", comments: [] },
+  { id: 2, title: "booktwo", publishingYear: 2022, authorIds: ["0", "2"], genreId: "2", comments: [] },
+  { id: 3, title: "bookthree", publishingYear: 2023, authorId: "3", genreId: "3", comments: [] }
 ];
 
   exports.add = (book) => {

@@ -1,8 +1,8 @@
 const books_users = [
-    {bookId: "0", userEmail: "cdacruz@pratt.edu", status: "finished", },
-    {bookId: "1", userEmail: "cdacruz@pratt.edu", status: "reading", },
-    {bookId: "2", userEmail: "cdacruz@pratt.edu", status: "todo", },
-    {bookId: "3", userEmail: "cdacruz@pratt.edu", status: "todo", }
+    {id: "0", bookId: "0", userEmail: "cdacruz@pratt.edu", status: "finished", },
+    {id: "1", bookId: "1", userEmail: "cdacruz@pratt.edu", status: "reading", },
+    {id: "2", bookId: "2", userEmail: "cdacruz@pratt.edu", status: "todo", },
+    {id: "3", bookId: "3", userEmail: "cdacruz@pratt.edu", status: "wishlist", }
   ];
   
   exports.statuses = [
