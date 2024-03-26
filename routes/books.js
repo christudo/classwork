@@ -27,6 +27,12 @@ router.get('/edit/:id', async (req, res, next) => {
   res.render('books/form', { title: 'BookedIn || Books', book: book, comments: comments });
 });
 
+/*router.get('/edit', async (req, res, next) => {
+  let AuthorIndex = req.query.id;
+  let author = Author.get(authorIndex);
+  res.render('authors/form', { title: 'BookedIn || Books', author: author, authorIndex: authorIndex, books: Book.all });
+});*/
+
 router.post('/upsert', async (req, res, next) => {
   console.log('body: ' + JSON.stringify(req.body))
   Book.upsert(req.body);
@@ -44,7 +50,7 @@ router.post('/upsert', async (req, res, next) => {
     const book = Book.get(bookId); // { title, genreId: 2 } as Book
     const genre = Genre.get(book.genreId);
     const comment = Comment.get(book.commentId); // Fetch the comment based on commentId
-    let templateVars = {
+    const templateVars = {
       title: 'BookedIn || Books',
       book: book,
       bookId: bookId,

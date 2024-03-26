@@ -1,12 +1,10 @@
 <h1>Comments</h1>
-{{#if comments}}
-  <ul>
+<a href="/comments/form">Create a new comment</a>
+
+<ul>
     {{#each comments}}
     <li>
         <a href="/comments/show/{{this.commentId}}">{{this.commentId}} - {{this.name}}</a>
     </li>
     {{/each}}
 </ul>
-{{else}}
-    <p>No comments available.</p>
-{{/if}}

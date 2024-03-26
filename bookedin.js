@@ -1,22 +1,35 @@
 const express = require('express');
-const { credentials } = require('./config');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
+
+const { credentials } = require('./config');
+
 const csrf = require('csurf');
 const path = require('path');
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
 const booksRouter = require('./routes/books');
-const genresRouter = require('./routes/genres');
 const usersRouter = require('./routes/users');
 const booksUsersRouter = require('./routes/books_users');
+const genresRouter = require('./routes/genres');
 const commentsRouter = require('./routes/comments');
 
 const app = express()
 const port = 3000
 
+//extra platform setup
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser(credentials.cookieSecret));
+app.use(expressSession({
+  secret: credentials.cookieSecret,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+}));
+
+// view engine setup
 var handlebars = require('express-handlebars').create({
     helpers: {
       eq: (v1, v2) => v1 == v2,
@@ -38,18 +51,9 @@ var handlebars = require('express-handlebars').create({
   });
 app.engine('handlebars', handlebars.engine); //registering handlebars with express
 app.set('view engine', 'handlebars');
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cookieParser(credentials.cookieSecret));
 
 // adding routes for bootstrap
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
-
-app.use(expressSession({
-    secret: credentials.cookieSecret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
-  }));
 
 // session configuration
 //make it possible to use flash messages, and pass them to the view
@@ -66,21 +70,22 @@ app.use((req, res, next) => {
   next()
 });
 
+// routes
 app.use('/', indexRouter);
 app.use('/authors', authorsRouter);
 app.use('/books', booksRouter);
-app.use('/genres', genresRouter);
 app.use('/users', usersRouter);
 app.use('/books_users', booksUsersRouter);
+app.use('/genres', genresRouter);
 app.use('/comments', commentsRouter);
 
 // this must come after we link in body-parser,
 // cookie-parser, and express-session
-app.use(csrf({ cookie: true }))
+/*app.use(csrf({ cookie: true }))
 app.use((req, res, next) => {
   res.locals._csrfToken = req.csrfToken()
   next()
-});
+});*/
 
 // custom 404 page
 app.use((req, res) => {

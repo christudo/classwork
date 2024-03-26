@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
-const Comment = require('../models/comment');
 const Book = require('../models/book');
+const Comment = require('../models/comment');
 
 router.get('/', function(req, res, next) {
  const comments = Comment.all;
@@ -15,7 +14,7 @@ router.get('/new', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   const newComment = req.body;
-  Genre.upsert(newComment);
+  Comment.upsert(newComment);
   res.redirect('/comments');
 });
 
@@ -25,7 +24,7 @@ router.get('/form', async (req, res, next) => {
 
 router.post('/upsert', async (req, res, next) => {
   console.log('body: ' + JSON.stringify(req.body));
-  Genre.upsert(req.body);
+  Comment.upsert(req.body);
   let createdOrUpdated = req.body.id ? 'updated' : 'created';
   req.session.flash = {
     type: 'info',
@@ -39,7 +38,7 @@ router.get('/show/:commentId', function(req, res, next) {
   const commentId = req.params.commentId;
   const books = Book.all.filter(book => book.commentId === commentId);
   const comment = Comment.get(commentId); // Fetch genre details if needed
-  res.render('comments/show', { title: 'Comments', commentId: commentId, books: books });
+  res.render('comments/show', { title: 'Comment Books', commentId: commentId, books: books });
 });
 
 

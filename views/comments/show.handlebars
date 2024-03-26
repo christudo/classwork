@@ -1,8 +1,18 @@
+<h1>{{comment.name}}</h1>
+
 {{#if comment}}
-    <p>User: {{comment.userEmail}}</p>
-    <p>Book: {{lookupBookTitle comment.bookId}}</p>
-    <p>Comment: {{comment.text}}</p>
-    <a href="/comments/edit?id={{comment.id}}">Edit</a>
-{{else}}
-    <p>Comment not found.</p>
+  <p>Comment: {{comment.name}}</p>
 {{/if}}
+
+<!-- Display the associated books -->
+{{#if books.length}}
+  <h2>Books in {{comment.name}}</h2>
+  <ul>
+    {{#each books}}
+      <li>{{this.title}} (Published in {{this.publishingYear}})</li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No books found for this comment.</p>
+{{/if}}
+
