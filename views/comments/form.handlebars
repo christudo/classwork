@@ -1,44 +1,29 @@
 <form action="/comments/upsert" role="form" method="post">
-{{#if comment}}
   <input type="hidden" name="_csrf" value="{{_csrfToken}}">
-
-  <div>
-    <h2>{{comment.commentId}} {{comment.name}}</h2>
-    <input type="hidden" name="id" value="{{commentIndex}}">
-  </div>
-  {{/if}}
-
-  <div>
-    <label for="name">Comment</label>
-    <input type="text" id="name" name="name" required>
-  </div>
-
-  <div>
+  
+  
+  <div class="mb-3">
     <label for="bookId">Select Book</label>
     <select id="bookId" name="bookId">
-      <option value="">-- Select a Book --</option>
+      <option disabled selected value>-- Select a Book --</option>
       {{#each books}}
         <option value="{{this.id}}">{{this.title}}</option>
       {{/each}}
     </select>
   </div>
+  </br>
 
-<ul>
-  {{#each books}}
-    <li>
-      <h2>{{this.title}}</h2>
-      <p>Published in {{this.publishingYear}}</p>
-      <p>Authors:
-        {{#each this.authorIds}}
-          {{#if @index}}, {{/if}}
-          {{lookup ../authors this.firstName}} {{lookup ../authors this.lastName}}
-        {{/each}}
-      </p>
-      <p>Genre: {{lookup ../genres this.genreId}}</p>
-      <a href="/books/edit/{{@index}}">Edit</a>
-    </li>
-  {{/each}}
-</ul>
+  <div>
+    <label for="comment">Comment</label>
+    <textarea id="comment" name="text" required></textarea>
+  </div>
+  
+  </br>
+  <div>
+   <label for="userEmail">Email:</label>
+  <input type="text" id="userEmail" name="userEmail" required>
+  </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+</br>
+<button type="submit" class="btn btn-primary">Submit</button>
 </form>

@@ -6,26 +6,25 @@
       <input type="hidden" name="id" value="{{authorIndex}}">
     </div>
   {{/if}}
+  
+  </br>
   <div>
     <label for="first_name">First Name</label>
     <input type="text" id="first_name" name="firstName" {{#if author}}value="{{author.firstName}}"{{/if}}>
   </div>
+
+  </br>
   <div>
-    <label for="last_name">Last name</label>
+    <label for="last_name">Last Name</label>
     <input type="text" id="last_name" name="lastName" {{#if author}}value="{{author.lastName}}"{{/if}}>
   </div>
-
-  <div class="mb-3">
-  <label for="authorId">Author</label>
-    <select name="authorId" id="authorId">
-      <option disabled selected value>-- select Author --</option>
-      {{#each authors}}
-        <option value="{{@index}}">
-          {{this.firstName}} {{this.lastName}}
-        </option>
-      {{/each}}
-    </select>
+  
+  </br>
+  <div>
+    <label for="genre">Genre</label>
+    <input type="text" id="genre" name="genre" {{#if genre}}value="{{genre.name}}"{{/if}}>
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+</br>
+<button type="submit" class="btn btn-primary">Submit</button>
 </form>

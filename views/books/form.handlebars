@@ -1,5 +1,3 @@
-<h1>New Book</h1>
-
 <form action="/books/upsert" role="form" method="post">
 <input type="hidden" name="_csrf" value="{{_csrfToken}}">
 {{#if book}}
@@ -14,11 +12,13 @@
     <input type="text" id="title" name="title" {{#if book}}value="{{book.title}}"{{/if}}>
   </div>
 
+  </br> 
   <div>
     <label for="year">Publishing Year</label>
     <input type="number" id="year" name="publishingYear" {{#if book}}value="{{book.publishingYear}}"{{/if}}>
   </div>
 
+  </br> 
    <div class="mb-3">
     <label for="authorId">Written by</label>
     <select name="authorId" id="authorId">
@@ -31,6 +31,7 @@
     </select>
   </div>
 
+  </br> 
  <div>
     <label for="commentId">Comment</label>
   <textarea type="text" id="commentId" name="commentId" {{#if commentId}}value="{{commentId}}"{{/if}}></textarea>
@@ -45,6 +46,7 @@
   {{/if}}
   </div>
 </div>
-  
+
+</br> 
 <button type="submit" class="btn btn-primary">Submit</button>
 </form>

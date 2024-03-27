@@ -22,13 +22,16 @@ router.post('/', function(req, res, next) {
 
 router.get('/form', async (req, res, next) => {
   res.render('comments/form');
+  const books = Book.all;
+  res.render('comments/form', { title: 'Add Comment', books: books });
 });
 
 router.post('/:id/comments', (req, res) => {
   const bookId = req.params.id;
-  const { text, user } = req.body;
-  const comment = { id: generateUniqueId(), bookId, text, user };
-  
+  const email = req.body;  
+  const text = req.body;
+  const comment = { id: generateUniqueId(), bookId, text, email };
+
   Comment.addComment(comment);
   Book.addCommentToBook(bookId, comment.id);
   res.status(201).json({ message: 'Comment added successfully', comment });
@@ -40,5 +43,17 @@ router.get('/:id/comments', (req, res) => {
 
   res.json({ comments: bookComments });
 });
+
+router.get('/show/:id', (req, res) => {
+  const bookId = req.params.id;
+  const bookComments = Book.getBookComments(bookId);
+
+  res.render('comments/show', { title: 'BookedIn || Comments', comments: bookComments });
+});
+
+router.post('/upsert', async (req, res, next) => {
+  console.log(req.body)
+  Comment.upsert(req.body);
+})
 
 module.exports = router;

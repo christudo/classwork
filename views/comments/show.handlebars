@@ -1,18 +1,11 @@
-<h1>{{comment.name}}</h1>
+<h1>Comments for Book</h1>
 
-{{#if comment}}
-  <p>Comment: {{comment.name}}</p>
-{{/if}}
-
-<!-- Display the associated books -->
-{{#if books.length}}
-  <h2>Books in {{comment.name}}</h2>
+{{#if comments.length}}
   <ul>
-    {{#each books}}
-      <li>{{this.title}} (Published in {{this.publishingYear}})</li>
+    {{#each comments}}
+      <li>{{this.text}}</li>
     {{/each}}
   </ul>
 {{else}}
-  <p>No books found for this comment.</p>
+  <p>No comments found for this book.</p>
 {{/if}}
-

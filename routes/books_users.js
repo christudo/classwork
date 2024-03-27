@@ -6,6 +6,7 @@ const Comment = require('../models/comment'); // Add the Comment model
 
 router.post('/upsert', async (req, res, next) => {
   console.log('body: ' + JSON.stringify(req.body))
+  const statusId = req.body.statusId;
   let bookId = req.body.bookId;
   let redirect = `/books/show/${bookId}`;
   BookUser.upsert(req.body);
@@ -14,7 +15,7 @@ router.post('/upsert', async (req, res, next) => {
     intro: 'Success!',
     message: 'Your status has been stored',
   };
-  res.redirect(303, redirect)
+  res.redirect(303, `${redirect}?statusId=${statusId}`);
 });
 
 module.exports = router;

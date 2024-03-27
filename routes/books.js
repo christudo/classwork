@@ -52,6 +52,7 @@ router.post('/upsert', async (req, res, next) => {
       statuses: BookUser.statuses,
       genre: genre // "Science Fiction"
     };
+    
     if (templateVars.book.authorIds) {
       templateVars['authors'] = templateVars.book.authorIds.map((authorId) => Author.get(authorId))
     }  
