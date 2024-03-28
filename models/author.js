@@ -1,9 +1,9 @@
 
-const authors = [
+/* const authors = [
     {firstName: "James", lastName: "S. A. Corey"},
     {firstName: "Craig", lastName: "Alanson"},
     {firstName: "Cixin", lastName: "Liu"},
-]
+]*/
 
 const db = require('../database');
 
@@ -36,4 +36,4 @@ exports.all = async () => {
     authors[author.id] = author;
   }
 
- exports.all = authors
+/* exports.all = authors*/
