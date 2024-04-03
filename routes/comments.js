@@ -20,10 +20,11 @@ router.post('/', function(req, res, next) {
   res.redirect('/comments');
 });
 
-router.get('/form', async (req, res, next) => {
-  res.render('comments/form');
-  const books = Book.all;
-  res.render('comments/form', { title: 'Add Comment', books: books });
+router.get('/form/:id', async (req, res, next) => {
+  const commentId = req.params.id;
+  const comment = Comment.get(commentId);
+
+  res.render('comments/form', { title: 'Add Comment', comment: comment });
 });
 
 router.post('/:id/comments', (req, res) => {
@@ -54,6 +55,7 @@ router.get('/show/:id', (req, res) => {
 router.post('/upsert', async (req, res, next) => {
   console.log(req.body)
   Comment.upsert(req.body);
+  res.redirect(303, `/books/show/${req.body.bookId}`)
 })
 
 module.exports = router;

@@ -1,29 +1,10 @@
 <form action="/comments/upsert" role="form" method="post">
-  <input type="hidden" name="_csrf" value="{{_csrfToken}}">
-  
-  
-  <div class="mb-3">
-    <label for="bookId">Select Book</label>
-    <select id="bookId" name="bookId">
-      <option disabled selected value>-- Select a Book --</option>
-      {{#each books}}
-        <option value="{{this.id}}">{{this.title}}</option>
-      {{/each}}
-    </select>
-  </div>
-  </br>
-
-  <div>
-    <label for="comment">Comment</label>
-    <textarea id="comment" name="text" required></textarea>
-  </div>
-  
-  </br>
-  <div>
-   <label for="userEmail">Email:</label>
-  <input type="text" id="userEmail" name="userEmail" required>
-  </div>
-
-</br>
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+    <input type="hidden" name="bookId" value="{{comment.bookId}}">
+    <input type="hidden" name="userEmail" value="{{comment.userEmail}}">
+    <div>
+      <label for="comment">Comment</label>
+      <textarea id="comment" name="text" required>{{comment.text}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>

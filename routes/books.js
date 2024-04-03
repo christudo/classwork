@@ -50,8 +50,10 @@ router.post('/upsert', async (req, res, next) => {
       book: book,
       bookId: bookId,
       statuses: BookUser.statuses,
-      genre: genre // "Science Fiction"
+      genre: genre, // "Science Fiction",
+      comments: Comment.AllForBook(bookId)
     };
+    console.log("-====-",bookId)
     
     if (templateVars.book.authorIds) {
       templateVars['authors'] = templateVars.book.authorIds.map((authorId) => Author.get(authorId))
@@ -62,10 +64,7 @@ router.post('/upsert', async (req, res, next) => {
     if (req.session.currentUser) {
     templateVars['bookUser'] = BookUser.get(bookId, req.session.currentUser.email);
     }
-    if (templateVars.book.commentId) {
-      templateVars['comment'] = Comment.get(templateVars.book.commentId);
-       }
-    res.render('books/show', { title: 'BookedIn || Books', book: book, genre: genre, comment: comment });
+    res.render('books/show', templateVars);
 });
 
 module.exports = router;

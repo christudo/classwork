@@ -35,15 +35,7 @@
  <div>
     <label for="commentId">Comment</label>
   <textarea type="text" id="commentId" name="commentId" {{#if commentId}}value="{{commentId}}"{{/if}}></textarea>
-  <div>
-    {{#if comments}}
-      {{#each comments}}
-        <span>
-          {{this.text}}
-        </span>
-        <br/>
-      {{/each}}
-  {{/if}}
+  
   </div>
 </div>
 
