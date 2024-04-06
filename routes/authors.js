@@ -4,21 +4,28 @@ const router = express.Router();
 const Author = require('../models/author');
 const Book = require('../models/book');
 
-router.get('/', function(req, res, next) {
-  const authors = Author.all
-  res.render('authors/index', { title: 'BookedIn || Authors', authors: authors });
-});
 
 router.get('/', async (req, res, next) => {
   let authors = await Author.all();
   res.render('authors/index', { title: 'BookedIn || Authors', authors: authors });
  }); 
 
-router.get('/form', async (req, res, next) => {
+/*
+  router.get('/form', async (req, res, next) => {
 
   res.render('authors/form', {
       title: 'BookedIn || Authors', 
   });
+});
+*/
+
+router.get('/form', async (req, res, next) => {
+  let templateVars = { title: 'BookedIn || Authors' }
+  if (req.query.id) {
+    let author = await Author.get(req.query.id)
+    if (author) {templateVars['author'] = author}
+  }
+  res.render('authors/form', templateVars);
 });
 
 router.post('/upsert', async (req, res, next) => {
@@ -32,11 +39,12 @@ router.post('/upsert', async (req, res, next) => {
   };
   res.redirect(303, '/authors');
 });
-
+/*
 router.get('/edit', async (req, res, next) => {
   let bookIndex = req.query.id;
   let book = Book.get(bookIndex);
   res.render('books/form', { title: 'BookedIn || Books', book: book, bookIndex: bookIndex, authors: Author.all });
 });
+*/
 
 module.exports = router;

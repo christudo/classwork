@@ -2,16 +2,13 @@
 {{#if genre}}
   <input type="hidden" name="_csrf" value="{{_csrfToken}}">
 
-  <div>
-    <h2>{{genre.genreId}} {{genre.name}}</h2>
-    <input type="hidden" name="id" value="{{genreIndex}}">
-  </div>
-  {{/if}}
-
-  <div>
-    <label for="name">Genre Name</label>
-    <input type="text" id="name" name="name" required>
-  </div>
+   <h2>{{genre.name}}</h2>
+     <input type="hidden" name="id" value="{{genre.id}}">
+   {{/if}}
+   <div class="mb-3">
+     <label for="name" class="form-label">Name</label>
+     <input type="text" id="name" name="name" {{#if genre}}value="{{genre.name}}"{{/if}}>
+   </div>
   
 </br>
   <button type="submit" class="btn btn-primary">Submit</button>
