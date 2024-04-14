@@ -1,11 +1,3 @@
-/*
-const authors = [
-    {firstName: "James", lastName: "S. A. Corey"},
-    {firstName: "Craig", lastName: "Alanson"},
-    {firstName: "Cixin", lastName: "Liu"},
-]
-*/
-
 const db = require('../database');
 
 exports.all = async () => {
@@ -13,27 +5,13 @@ exports.all = async () => {
   return db.camelize(rows);
 }
 
-/*
-  exports.add = (author) => {
-    authors.push(author);
-  }
-
-  exports.get = (idx) => {
-    return authors[idx];
-  }
-
-   exports.update = (author) => {
-    authors[author.id] = author;
-  }  
-  
-  exports.upsert = (author) => {
-    if (author.id) {
-      exports.update(author);
-    } else {
-      exports.add(author);
-    }
-  }
-*/
+exports.allForBook = async (book) => {
+  const { rows } = await db.getPool().query(`
+    select authors.* from authors
+    JOIN authors_books on authors_books.author_id = authors.id
+    where authors_books.book_id = $1;`, [book.id]);
+  return db.camelize(rows);
+}
 
 exports.get = async (id) => {
   const { rows } = await db.getPool().query("select * from authors where id = $1", [id])
@@ -58,5 +36,3 @@ exports.get = async (id) => {
   exports.update = (author) => {
     authors[author.id] = author;
   }
-
-/* exports.all = authors*/

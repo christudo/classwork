@@ -1,62 +1,60 @@
 <h1>{{book.title}}</h1>
-{{#if authors}}
- Written by {{#each authors}}{{this.firstName}} {{this.lastName}}{{#unless @last}}, {{/unless}}{{/each}}
+{{#if book.authors}}
+ Written by {{#each book.authors}}{{this.firstName}} {{this.lastName}}{{#unless @last}}, {{/unless}}{{/each}}
 {{/if}}
 
 <p>
   Originally published in {{book.publishingYear}}
 </p>
-<!-- Display the associated genre
-    {"id": 1, "name": "Fiction"},
-    {"id": 2, "name": "Science Fiction"},
-    {"id": 3, "name": "Documentary"},-->
+
 {{#if genre}}
   <p>Genre: {{genre.name}}</p>
 {{/if}}
-
 {{#if currentUser}}
 <div>
   <form action="/books_users/upsert" role="form" method="post">
     <input type="hidden" name="_csrf" value="{{_csrfToken}}">
-    <input type="hidden" name="bookId" value="{{bookId}}">
+    <input type="hidden" name="bookId" value="{{book.id}}">
     <input type="hidden" name="userEmail" value="{{currentUser.email}}">
+  {{#if bookUser}}
+   <input type="hidden" name="id" value="{{bookUser.id}}">
+  {{/if}}
     
   <!-- Status Selection -->  
     <label for="status">Status</label>
     <select name="status" id="status">
-      {{#unless (and bookUser bookUser.status)}}
+      {{#unless (and bookUser bookUser.readStatus)}}
         <option disabled selected value>-- select status --</option>
       {{/unless}}
       {{#each statuses}}
-        <option value="{{this}}" {{#if (and @root.bookUser (eq @root.bookUser.status this))}}selected{{/if}}>{{this}}</option>
+        <option value="{{this}}" {{#if (and @root.bookUser (eq @root.bookUser.readStatus this))}}selected{{/if}}>{{this}}</option>
       {{/each}}
     </select>
-
     <button type="submit">Submit</button>
   </form>
 </div>
-
-
+{{/if}}
 <div>
+{{#if currentUser}}
   <form action="/comments/upsert" role="form" method="post">
     <input type="hidden" name="_csrf" value="{{_csrfToken}}">
-    <input type="hidden" name="bookId" value="{{bookId}}">
+    <input type="hidden" name="bookId" value="{{book.id}}">
     <input type="hidden" name="userEmail" value="{{currentUser.email}}">
     <div>
-      <label for="comment">Comment</label>
-      <textarea id="comment" name="text" required></textarea>
+      <textarea rows="5" id="comment" name="text">{{comment.text}}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
 {{/if}}
-
-<div>
-    {{#each comments}}
-      <span>
-        {{this.text}}
-      </span>
-      <a href="/comments/form/{{this.id}}">edit</a>
-      <br/>
-    {{/each}}
+{{#each comments}}
+  <div>
+    <p>
+    {{this.text}}<br>
+    By {{this.userEmail}}
+    {{#if (eq @root.currentUser.email this.userEmail) }}
+    <br><a href="/comments/edit?id={{this.id}}">Edit</a>
+    {{/if}}
+  </div>
+{{/each}}
 </div>

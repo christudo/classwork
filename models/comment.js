@@ -31,7 +31,7 @@ exports.get = (id) => {
     });
 }
 
-exports.AllForBook = (bookId) => {
+exports.allForBook = (bookId) => {
     return comments.filter((comment) => {
         return comment.bookId === bookId;
     });
