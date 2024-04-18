@@ -10,15 +10,6 @@ router.get('/', async (req, res, next) => {
   res.render('authors/index', { title: 'BookedIn || Authors', authors: authors });
  }); 
 
-/*
-  router.get('/form', async (req, res, next) => {
-
-  res.render('authors/form', {
-      title: 'BookedIn || Authors', 
-  });
-});
-*/
-
 router.get('/form', async (req, res, next) => {
   let templateVars = { title: 'BookedIn || Authors' }
   if (req.query.id) {
@@ -39,12 +30,5 @@ router.post('/upsert', async (req, res, next) => {
   };
   res.redirect(303, '/authors');
 });
-/*
-router.get('/edit', async (req, res, next) => {
-  let bookIndex = req.query.id;
-  let book = Book.get(bookIndex);
-  res.render('books/form', { title: 'BookedIn || Books', book: book, bookIndex: bookIndex, authors: Author.all });
-});
-*/
 
 module.exports = router;
